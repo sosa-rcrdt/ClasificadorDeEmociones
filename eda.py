@@ -34,9 +34,9 @@ def limpiar_texto_para_frecuencias(texto: str):
     texto = str(texto).lower()
     texto = re.sub(r"[^a-z\s]", " ", texto)
     texto = re.sub(r"\s+", " ", texto).strip()
-    return [palabra for palabra in texto.split() if len(palabra) > 3]
+    return [palabra for palabra in texto.split() if len(palabra) >= 3]
 
-def revisar_ejemplos_conflictivos(df, label_a_emocion, output_dir, max_ejemplos=100, random_state=42):
+def revisar_ejemplos_conflictivos(df, label_a_emocion, max_ejemplos=100, random_state=42):
     df_conflictos = (
         df.groupby("text")
         .agg(
@@ -311,7 +311,6 @@ print(df_resumen_duplicados.to_string(index=False))
 df_conflictos, df_resumen_conflictos, df_ejemplos_conflictivos = revisar_ejemplos_conflictivos(
     df=df,
     label_a_emocion=label_a_emocion,
-    output_dir=OUTPUT_DIR,
     max_ejemplos=100,
     random_state=42
 )
